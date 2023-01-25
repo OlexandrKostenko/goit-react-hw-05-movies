@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { LinkItem, ListItem, Input, ButtonSubmit } from "./Movies.styled";
 
 const Movies = () => {
     const [query, setQuery] = useState('');
@@ -33,13 +32,12 @@ const Movies = () => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetchSearchMovies(query)
-        console.log(event);        
+        fetchSearchMovies(query);
+        reset();
     };
 
     const handleChange = (event) => {
         setQuery(event.target.value);
-        console.log(event.target.value)
     }
 
     const reset = () => {
@@ -50,15 +48,15 @@ const Movies = () => {
     return (
         <>
         <form onSubmit={handleSubmit}>
-            <input type="text" value={query} name='query' onChange={handleChange}/>
-                <button type="submit">Search</button>
+            <Input type="text" value={query} name='query' onChange={handleChange}/>
+                <ButtonSubmit type="submit">Search</ButtonSubmit>
             </form>
         <ul>
              
                 {searchMovies.length > 0 && searchMovies.map(({ title, id }) => {
-                    return (<li key={id}>
-                        <Link to={`/movies/${id}`}>{ title }</Link>
-                   </li>)
+                    return (<ListItem key={id}>
+                        <LinkItem to={`/movies/${id}`}>{ title }</LinkItem>
+                   </ListItem>)
                 } )}
             
         </ul>

@@ -2,17 +2,17 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { CastItem, CastList, CastName } from "./Cast.styled";
 
 const Cast = () => {
     const { id } = useParams();
-    const [movie, setMovie] = useState([]);
+    const [cast, setCast] = useState([]);
     
     useEffect(() => {
         const fetchMovieID = async (id) => {
             try {
                 const results = await fetchMovies(id);
-                console.log(results.data.cast)
-                setMovie(results.data.cast);
+                setCast(results.data.cast);
             } catch (error) {
                 console.log(error);
             }
@@ -31,18 +31,16 @@ const Cast = () => {
         };
     };
     
-   console.log(movie)
-    
     return (
-        movie && (<ul>
-            {movie.length > 0 && movie.map(({ profile_path, name, id, character }) => {
-                    return (<li key={id}>
-                        <img src={`https://image.tmdb.org/t/p/w500${profile_path}`} alt={name} width="100px"/>
-                        <p>{name}</p>
+        cast && (<CastList>
+            {cast.length > 0 && cast.map(({ profile_path, name, id, character }) => {
+                    return (<CastItem key={id}>
+                        <img src={`https://image.tmdb.org/t/p/w500${profile_path}`} alt={name} width="200px"/>
+                        <CastName>{name}</CastName>
                         <p>Character: { character }</p>
-                    </li>)
+                    </CastItem>)
                 } )}
-        </ul>)
+        </CastList>)
     )
 };
 

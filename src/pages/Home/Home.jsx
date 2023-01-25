@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { LinkItem, ListItem } from "./Home.styled";
 
 const Home = () => {
 const [trendingMovies, setTrendingMovies] = useState([])
@@ -35,9 +35,9 @@ const [trendingMovies, setTrendingMovies] = useState([])
             <h1>Trending movies</h1>
             <ul>
                 {trendingMovies.length > 0 && trendingMovies.map(({ title, id }) => {
-                    return (<li key={id}>
-                    <Link to={`/movies/${id}`}>{ title }</Link>
-                    </li>)
+                    return (<ListItem key={id}>
+                    <LinkItem to={`/movies/${id}`}>{ title }</LinkItem>
+                    </ListItem>)
                 } )}
             </ul>
         </>

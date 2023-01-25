@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import { LinkWrapper, Wrapper, Link, Image } from "./MovieDetails.styled";
 
 const MovieDetails = () => {
     const { id } = useParams();
@@ -11,7 +12,6 @@ const MovieDetails = () => {
         const fetchMovieID = async (id) => {
             try {
                 const results = await fetchMovies(id);
-                console.log(results.data)
                 setMovie(results.data);
             } catch (error) {
                 console.log(error);
@@ -31,26 +31,27 @@ const MovieDetails = () => {
         };
     };
     
-   console.log(movie)
-    
+    const { poster_path, title, release_date, vote_average, overview, genres } = movie;
+
     return (
+        
         movie && (<>
-            <div>
-                <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} width="200px"/>
+            <Wrapper>
+                <Image src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={title} width="250px"/>
                 <div>
-                    <h1>{movie.title} {movie.release_date}</h1>
-                    <p>User Score: {Math.floor((Number(movie.vote_average) ) * 10)}%</p>
+                    <h1>{title} ({release_date && release_date.slice(0,4)})</h1>
+                    <p>User Score: {Math.floor((Number(vote_average) ) * 10)}%</p>
                     <h2>Overview</h2>
-                    <p>{movie.overview}</p>
+                    <p>{overview}</p>
                     <h3>Genres</h3>
-                    {movie.genres && <p>{movie.genres.map(({ name }) => { return (name) }).join(', ')}</p>}
+                    {genres && <p>{genres.map(({ name }) => { return (name) }).join(', ')}</p>}
                 </div>
-            </div>
+            </Wrapper>
             <h4>Additional information</h4>
-            <ul>
+            <LinkWrapper>
                 <Link to="cast">Cast</Link>
                 <Link to="reviews">Reviews</Link>
-            </ul>
+            </LinkWrapper>
             <Outlet />
         </>)
     )

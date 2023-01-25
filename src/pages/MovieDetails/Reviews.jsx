@@ -2,17 +2,17 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Label, ReviewItem } from "./Reviews.styled";
 
 const Reviews = () => {
     const { id } = useParams();
-    const [movie, setMovie] = useState([]);
+    const [review, setReview] = useState([]);
     
     useEffect(() => {
         const fetchMovieID = async (id) => {
             try {
                 const results = await fetchMovies(id);
-                console.log(results.data.results)
-                setMovie(results.data.results);
+                setReview(results.data.results);
             } catch (error) {
                 console.log(error);
             }
@@ -31,16 +31,14 @@ const Reviews = () => {
         };
     };
     
-   console.log(movie)
-    
     return (
-        movie && (<ul>
-            {movie.length > 0 && movie.map(({ author, content, id, created_at }) => {
-                    return (<li key={id}>
-                        <p>Author: {author}</p>
-                        <p>Review: {content}</p>
-                        <p>Created: { created_at }</p>
-                    </li>)
+        review && (<ul>
+            {review.length > 0 && review.map(({ author, content, id, created_at }) => {
+                    return (<ReviewItem key={id}>
+                        <p><Label>Author:</Label> {author}</p>
+                        <p><Label>Review: </Label>{content}</p>
+                        <p><Label>Created: </Label>{ created_at.slice(0,10) }</p>
+                    </ReviewItem>)
                 } )}
         </ul>)
     )
