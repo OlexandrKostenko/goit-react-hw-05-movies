@@ -35,7 +35,7 @@ const Cast = () => {
         cast && (<CastList>
             {cast.length > 0 && cast.map(({ profile_path, name, id, character }) => {
                     return (<CastItem key={id}>
-                        <img src={`https://image.tmdb.org/t/p/w500${profile_path}`} alt={name} width="200px"/>
+                        {profile_path ? <img src={`https://image.tmdb.org/t/p/w500${profile_path}`} alt={name} width="200px" /> : <img src="https://santehmag.com.ua/image/cache/catalog/import_yml/SD0/003/376/0/no-img-200x200.jpg" alt="foto not found" width="200px" height="300px"/> }
                         <CastName>{name}</CastName>
                         <p>Character: { character }</p>
                     </CastItem>)

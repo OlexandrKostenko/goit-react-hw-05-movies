@@ -1,10 +1,12 @@
-import Home from "pages/Home/Home";
-import Movies from "pages/Movies/Movies";
-import MovieDetails from "pages/MovieDetails/MovieDetails";
-import Cast from "pages/MovieDetails/Cast";
-import Reviews from "pages/MovieDetails/Reviews";
+import { lazy, Suspense } from "react";
+import Cast from "pages/MovieDetails/Cast/Cast";
+import Reviews from "pages/MovieDetails/Reviews/Reviews";
 import { Routes, Route } from "react-router-dom";
 import { NavItem, NavWrapper } from "./App.styled";
+
+const Home = lazy(() => import('../pages/Home/Home'));
+const Movies = lazy(() => import('../pages/Movies/Movies'));
+const MovieDetails = lazy(() => import('../pages/MovieDetails/MovieDetails'));
 
 export const App = () => {
   return (
@@ -14,15 +16,20 @@ export const App = () => {
         <NavItem to="/movies">Movies</NavItem>
       </NavWrapper>
 
-    <Routes basename='goit-react-hw-05-movies'>
+      <Suspense fallback={<p>Loading...</p>}>
+      <Routes basename='goit-react-hw-05-movies'>
+      
       <Route path='/' element={<Home />} />
-        <Route path='/movies' element={<Movies />} />
+      <Route path='/movies' element={<Movies />} />
         
       <Route path="/movies/:id" element={<MovieDetails />}>
         <Route path="cast" element={<Cast />} />
         <Route path="reviews" element={<Reviews />} /> 
-      </Route>   
-    </Routes>
+      </Route>
+      
+      <Route path='*' element={<Home />} />  
+      </Routes>
+      </Suspense>
     
     </div>
   );

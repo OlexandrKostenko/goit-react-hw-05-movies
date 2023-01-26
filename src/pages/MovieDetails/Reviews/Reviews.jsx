@@ -33,13 +33,14 @@ const Reviews = () => {
     
     return (
         review && (<ul>
-            {review.length > 0 && review.map(({ author, content, id, created_at }) => {
+            {review.length > 0 ? review.map(({ author, content, id, created_at }) => {
                     return (<ReviewItem key={id}>
                         <p><Label>Author:</Label> {author}</p>
                         <p><Label>Review: </Label>{content}</p>
                         <p><Label>Created: </Label>{ created_at.slice(0,10) }</p>
                     </ReviewItem>)
-                } )}
+            })
+                : <p>&#129402; We don&#96;t have any reviews for this movie </p>}
         </ul>)
     )
 };

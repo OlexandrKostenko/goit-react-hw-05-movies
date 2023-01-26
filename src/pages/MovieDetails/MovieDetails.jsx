@@ -37,7 +37,7 @@ const MovieDetails = () => {
         
         movie && (<>
             <Wrapper>
-                <Image src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={title} width="250px"/>
+                {poster_path && <Image src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt={title} width="250px" />}
                 <div>
                     <h1>{title} ({release_date && release_date.slice(0,4)})</h1>
                     <p>User Score: {Math.floor((Number(vote_average) ) * 10)}%</p>
